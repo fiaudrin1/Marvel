@@ -1,22 +1,16 @@
 <template >
-    <div id="search_Container">
-        <h3>Hello search.vue</h3>
-        <div id="search_content">
-            <div id="search_ContainerInputBloc">  
-                <input id="search_input" type=textField>
-                <button id="search_submit" class="search_CallToAction" type="button">
-                    Rechercher
-                </button>
-            </div>
-            <div id="search_ContainerByRandom">
-                <button id="search_random" class="search_CallToAction" type="button" v-on:click="get10CharactersRandom()" >
-                    Découvrir 10 Super Héros
-                </button>
-            </div>
+    <div id="search_content">
+        <div id="search_ContainerInputBloc">  
+            <input id="search_input" type="text">
+            <button id="search_submit" class="search_CallToAction" type="button" v-on:click="getCharactersSearch()">
+                Rechercher
+            </button>
         </div>
-
-        
-
+        <div id="search_ContainerByRandom">
+            <button id="search_random" class="search_CallToAction" type="button" v-on:click="get10CharactersRandom()" >
+                Découvrir 10 Super Héros
+            </button>
+        </div>
     </div>
 </template>
 
@@ -51,7 +45,6 @@
 
                     for(let i = 0; i <= 9; i++){
                         randomChar = Math.round(Math.random()*nbCharacters)
-                        console.log(randomChar)
 
                         axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=${randomChar}`)
                         .then((result) => {
@@ -64,12 +57,50 @@
                             console.log(error)
                         }) 
                     }
+                    console.log(this.characters)
+                })
+                .catch((error) => {
+                    console.log(error)
+                }) 
+            },
+
+
+            getCharactersSearch: function(){
+
+                this.characters = [] // remove characters at each call
+
+                let input = document.getElementById("search_input").value
+
+                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`)
+                .then((result) => {
+                    let nbCharacters = result.data.data.total
+                    let nbLoops = Math.ceil(nbCharacters / 100);
+                    let offset = 0;
+
+                    for(let i = 0; i < nbLoops; i++){
+
+                        axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=100&offset=${offset}`)
+                        .then((result) => {
+                        
+                            result.data.data.results.forEach((character) => {
+                                if(character.name.toLowerCase().includes(input.toLowerCase())){
+                                    this.characters.push(character)
+                                } else if(character.description.toLowerCase().includes(input.toLowerCase())){
+                                    this.characters.push(character)
+                                }
+                            })
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        }) 
+                        offset += 100;
+                    }
+                    console.log(this.characters)
                 })
                 .catch((error) => {
                     console.log(error)
                 }) 
 
-                console.log(this.characters)
             }
         }
     }
@@ -79,6 +110,9 @@
 <style lang="css">
     #search_content{
         display: flex;
+        border: 3px solid #ed1d24;
+        border-radius: 40px;
+        padding: 4rem 0rem;
     }
     
     #search_ContainerByRandom, #search_ContainerInputBloc{
