@@ -1,6 +1,5 @@
 <template >
     <div>
-        <h3>Hello character.vue</h3>
         <p>{{this.$route.params.id}}</p>
 
     <ul>

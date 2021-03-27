@@ -12,6 +12,11 @@
             </button>
         </div>
     </div>
+    <ul>
+        <li v-for="character in characters" :key="character">
+            <router-link :to="{ name: 'character', params: {id: character.id}}">{{character.name}}</router-link>
+        </li>
+    </ul>
 </template>
 
 <script>
