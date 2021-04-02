@@ -39,8 +39,7 @@
         methods:{
 
             get10CharactersRandom: function(){
-
-                this.characters = [] // remove characters at each call
+                this.characters = [] //removes characters at each call
 
                 axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`)
                 .then((result) => {
@@ -71,8 +70,7 @@
 
 
             getCharactersSearch: function(){
-
-                this.characters = [] // remove characters at each call
+                this.characters = [] // removes characters at each call
 
                 let input = document.getElementById("search_input").value
 
@@ -133,7 +131,7 @@
     .search_CallToAction{
         text-decoration: none;
         padding: 0.5rem 1.5rem;
-        background-color: #ed1d24;
+        background-color: red;
         color: white;
         font-weight: bold;
         font-size: 1.2rem;
@@ -141,17 +139,18 @@
         border-color:transparent;
         cursor: pointer;
     }   
+    .search_CallToAction:hover{
+        background-color:#A00;
+    }
     #search_input{
         width: 60%;
         margin-top: 1.5rem;
-        border-radius: 15px;
     }
     #search_submit{
         width: 45%;
         margin-top: 1.5rem;
         margin-bottom: 1.5rem;
     }
-    
     #search_ContainerByRandom button{
         width: 50%;
         

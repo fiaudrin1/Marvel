@@ -76,7 +76,9 @@
         flex-direction: column;
         margin: 30px;
     }
-    
+    .thumbnails_content a{
+        text-decoration:none
+    }
     .thumbnails_content{
         display: flex;
         flex-wrap: wrap;
