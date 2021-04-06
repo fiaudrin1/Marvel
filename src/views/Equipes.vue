@@ -1,5 +1,17 @@
 <template>
   <div class="equipes">
-    <h1>This is an equipes page</h1>
+    <Team />
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import Team from '@/components/Team.vue'
+
+export default { //ajout du composant equipe
+  name: 'Equipes',
+  components: {
+    Team
+  }
+}
+</script>

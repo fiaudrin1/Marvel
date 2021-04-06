@@ -1,7 +1,7 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Explorer</router-link>
-    <a href="/" id="logo">
+  <div id="nav"> <!--Navigation de notre application-->
+    <router-link to="/">Explorer</router-link> <!--Route principale "explorer"-->
+    <a href="/" id="logo"> <!--Cliquer sur le logo redirige vers l'explorer-->
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            width="200px" height="80px" viewBox="-215.19 -86.608 1000 402.473" enable-background="new -215.19 -86.608 1000 402.473"
            xml:space="preserve">
@@ -21,7 +21,7 @@
         </g>
       </svg>
     </a>
-    <router-link to="/equipes">Equipes</router-link>
+    <router-link to="/equipes">Equipe</router-link> <!--Route gestion des équipes de personnages-->
   </div>
   <router-view/>
 </template>
@@ -34,7 +34,6 @@
   margin: 0% 10%;
   color: #2c3e50;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
@@ -47,12 +46,11 @@
   display: flex;
   justify-content: space-around;
   align-items: bottom;
+  margin-top : 3%;
 }
-
 #nav a.router-link-exact-active {
   border-bottom: 2px solid #ed1d24;
 }
-
 #logo{
   margin-top: -40px;
 }

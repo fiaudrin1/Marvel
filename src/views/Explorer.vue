@@ -10,7 +10,7 @@
 import Search from '@/components/Search.vue'
 import Thumbnails from '@/components/Thumbnails.vue'
 
-export default {
+export default { //ajout des composants search et thumbnails dans l'explorer
   name: 'Explorer',
   components: {
     Thumbnails,

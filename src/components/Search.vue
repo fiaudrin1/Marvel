@@ -12,9 +12,13 @@
             </button>
         </div>
     </div>
-    <ul>
+    <h2>Liste de personnages aléatoire :</h2>
+    <ul id="randContainer">
         <li v-for="character in characters" :key="character">
-            <router-link :to="{ name: 'character', params: {id: character.id}}">{{character.name}}</router-link>
+            <router-link :to="{ name: 'character', params: {id: character.id}}"> <!--Makes all tiles clickable to get informations-->
+                <img class="thumbnails_img" :src="character.thumbnail.path+'/portrait_xlarge.'+character.thumbnail.extension" alt="image of {{character.name}}">
+                <p>{{character.name}}</p>
+            </router-link>
         </li>
     </ul>
 </template>
@@ -24,35 +28,22 @@
     import axios from 'axios'
     export default {
         name: 'Search',
-
         data(){
             return{
                 characters: []
             }
         },
-
-        mounted(){
-
-            //this.get10CharactersRandom()
-        },
-
         methods:{
-
             get10CharactersRandom: function(){
-                this.characters = [] //removes characters at each call
-
-                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`)
+                this.characters = [] //resets characters at each call
+                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`) //get the number of characters in the database
                 .then((result) => {
                     let nbCharacters = result.data.data.total
                     let randomChar;
-
-
-                    for(let i = 0; i <= 9; i++){
+                    for(let i = 0; i <= 9; i++){ //get 10 different characters
                         randomChar = Math.round(Math.random()*nbCharacters)
-
                         axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=${randomChar}`)
                         .then((result) => {
-                        
                             result.data.data.results.forEach((character) => {
                                 this.characters.push(character)
                             })
@@ -61,34 +52,27 @@
                             console.log(error)
                         }) 
                     }
-                    console.log(this.characters)
                 })
                 .catch((error) => {
                     console.log(error)
                 }) 
             },
 
-
             getCharactersSearch: function(){
                 this.characters = [] // removes characters at each call
-
                 let input = document.getElementById("search_input").value
-
-                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`)
+                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`) //get number of chracter in the database
                 .then((result) => {
                     let nbCharacters = result.data.data.total
                     let nbLoops = Math.ceil(nbCharacters / 100);
                     let offset = 0;
-
-                    for(let i = 0; i < nbLoops; i++){
-
+                    for(let i = 0; i < nbLoops; i++){ //loop to allow to search in all the character list (it's supposed to search 100 by 100)
                         axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=100&offset=${offset}`)
                         .then((result) => {
-                        
-                            result.data.data.results.forEach((character) => {
+                            result.data.data.results.forEach((character) => { //search loop
                                 if(character.name.toLowerCase().includes(input.toLowerCase())){
                                     this.characters.push(character)
-                                } else if(character.description.toLowerCase().includes(input.toLowerCase())){
+                                }else if(character.description.toLowerCase().includes(input.toLowerCase())){
                                     this.characters.push(character)
                                 }
                             })
@@ -98,26 +82,23 @@
                         }) 
                         offset += 100;
                     }
-                    console.log(this.characters)
                 })
                 .catch((error) => {
                     console.log(error)
                 }) 
-
             }
         }
     }
 
 </script>
 
-<style lang="css">
+<style>
     #search_content{
         display: flex;
         border: 3px solid #ed1d24;
         border-radius: 40px;
         padding: 4rem 0rem;
     }
-    
     #search_ContainerByRandom, #search_ContainerInputBloc{
         width: 50%;
         display: flex;
@@ -153,7 +134,33 @@
     }
     #search_ContainerByRandom button{
         width: 50%;
-        
     }
-    
+    #randContainer{
+        display:flex;
+        justify-content:center;
+        padding:0 10%;
+        width:80%;
+        flex-wrap:wrap;
+        list-style-type:none;
+        background-color:#1e1e1e50;
+        border-radius: 25px;
+        padding-top:5%;
+        padding-bottom:5%;
+    }
+    #randContainer li{
+        width:20%;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+    }
+    #randContainer p,#randContainer a{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        text-decoration:none;
+        font-weight:bold;
+    }
 </style>

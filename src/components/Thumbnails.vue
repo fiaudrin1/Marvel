@@ -1,8 +1,9 @@
 <template >
+    <h2>Catalogue de personnage :</h2>
     <div class="thumbnails_container">
-        <div class="thumbnails_content" v-for="(character, index) in characters" :key="character">
-            <router-link :to="{ name: 'character', params: {id: character.id}}">
-                <img class="thumbnails_img" :src="url[index]" alt="image of {{character.name}}"> <!-- TODO : Si plusieurs images, faire carroussel automatique -->
+        <div class="thumbnails_content" v-for="(character, index) in characters" :key="character"> <!--For each character displayed-->
+            <router-link :to="{ name: 'character', params: {id: character.id}}"> <!--Clickable tile-->
+                <img class="thumbnails_img" :src="url[index]" alt="image of {{character.name}}">
                 <div class="thumbnails_contentName">
                     <p class="thumbnails_name"> {{character.name}} </p>
                 </div>
@@ -12,46 +13,30 @@
 </template>
 
 <script>
-    import {public_key/*, private_key*/ } from '../marvel';
+    import {public_key} from '../marvel';
     import axios from 'axios'
     export default {
         name: 'Thumbnails',
-
         data(){
-
             return{
-
                 characters: [],
-                url: [],
-                size: 'portrait_xlarge.',
+                url: [], //images urls for characters
+                size: 'portrait_xlarge.',  //this defines the wanted size of an image from the api
             }
         },
-
         mounted(){
-
             this.getCharacters()
         },
-
         methods:{
-
             getCharacters: function(){
-
                 axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=20&offset=0`)
                     .then((result) => {
-
-                        result.data.data.results.forEach((item) => {
-
-                            console.log("item")
-                            console.log(item)
-                            console.log(`${item.thumbnail.path}/${this.size}`)
+                        result.data.data.results.forEach((item) => { //get the first 20 character to display
                             this.characters.push(item)
-
-                            this.url.push(`${item.thumbnail.path}/${this.size}${item.thumbnail.extension}`)
+                            this.url.push(`${item.thumbnail.path}/${this.size}${item.thumbnail.extension}`) //url formatting
                         })
-                        console.log(this.url)
                     })
                     .catch((error) => {
-
                         console.log(error)
                     }) 
 
@@ -97,5 +82,4 @@
         display: flex;
         justify-content: center;
     }
-
 </style>
