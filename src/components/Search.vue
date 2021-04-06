@@ -36,13 +36,13 @@
         methods:{
             get10CharactersRandom: function(){
                 this.characters = [] //resets characters at each call
-                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`) //get the number of characters in the database
+                axios.get(`https://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`) //get the number of characters in the database
                 .then((result) => {
                     let nbCharacters = result.data.data.total
                     let randomChar;
                     for(let i = 0; i <= 9; i++){ //get 10 different characters
                         randomChar = Math.round(Math.random()*nbCharacters)
-                        axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=${randomChar}`)
+                        axios.get(`https://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=${randomChar}`)
                         .then((result) => {
                             result.data.data.results.forEach((character) => {
                                 this.characters.push(character)
@@ -61,13 +61,13 @@
             getCharactersSearch: function(){
                 this.characters = [] // removes characters at each call
                 let input = document.getElementById("search_input").value
-                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`) //get number of chracter in the database
+                axios.get(`https://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=1&offset=0`) //get number of chracter in the database
                 .then((result) => {
                     let nbCharacters = result.data.data.total
                     let nbLoops = Math.ceil(nbCharacters / 100);
                     let offset = 0;
                     for(let i = 0; i < nbLoops; i++){ //loop to allow to search in all the character list (it's supposed to search 100 by 100)
-                        axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=100&offset=${offset}`)
+                        axios.get(`https://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=100&offset=${offset}`)
                         .then((result) => {
                             result.data.data.results.forEach((character) => { //search loop
                                 if(character.name.toLowerCase().includes(input.toLowerCase())){

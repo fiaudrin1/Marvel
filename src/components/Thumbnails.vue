@@ -29,7 +29,7 @@
         },
         methods:{
             getCharacters: function(){
-                axios.get(`http://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=20&offset=0`)
+                axios.get(`https://gateway.marvel.com/v1/public/characters?apikey=${public_key}&limit=20&offset=0`)
                     .then((result) => {
                         result.data.data.results.forEach((item) => { //get the first 20 character to display
                             this.characters.push(item)

@@ -76,7 +76,7 @@
             },
             getCharacter: function(){
                 var characterId = this.$route.params.id
-                axios.get(`http://gateway.marvel.com/v1/public/characters/${characterId}?apikey=${public_key}&limit=10&offset=0`)
+                axios.get(`https://gateway.marvel.com/v1/public/characters/${characterId}?apikey=${public_key}&limit=10&offset=0`)
                     .then((result) => {
                         result.data.data.results.forEach((item) =>{
                             this.character.push(item)
@@ -90,7 +90,7 @@
             getFirstAndLastApparitionComics: async function(){ 
                 //getting all character's appearances
                 var characterId = this.$route.params.id
-                await axios.get(`http://gateway.marvel.com/v1/public/characters/${characterId}/comics?apikey=${public_key}&limit=100&offset=0`)
+                await axios.get(`https://gateway.marvel.com/v1/public/characters/${characterId}/comics?apikey=${public_key}&limit=100&offset=0`)
                     .then((result) => {
                         result.data.data.results.forEach((comic) =>{
                             this.allApparitionComics.push(comic);

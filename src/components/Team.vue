@@ -56,7 +56,7 @@
                 }
             },
             getMemberName: function(id){ //return the name associated to a character ID
-                axios.get(`http://gateway.marvel.com/v1/public/characters/${id}?apikey=${public_key}&limit=1&offset=0`)
+                axios.get(`https://gateway.marvel.com/v1/public/characters/${id}?apikey=${public_key}&limit=1&offset=0`)
                     .then((result) => {
                         let name=result.data.data.results[0].name
 
