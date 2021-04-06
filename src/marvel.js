@@ -1,2 +1,2 @@
-export const public_key = "11e0719f1724cea0c91330f68aa65a04";
-export const private_key = "8210af24b873d348a0e2bdf79161311bd1491d4d";
+export const public_key = process.env.VUE_APP_MARVEL_API_PUBLIC_KEY;
+export const private_key = process.env.VUE_APP_MARVEL_API_PRIVATE_KEY;
